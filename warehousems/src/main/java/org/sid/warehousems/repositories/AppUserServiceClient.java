@@ -4,7 +4,7 @@ import org.sid.warehousems.entities.AppUser;
 import org.sid.warehousems.entities.RoleUserForm;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
-
+@CrossOrigin(origins = "*")
 @FeignClient(name="user-service")
 public interface AppUserServiceClient {
     @GetMapping("/appUsers/{id}?projection=p1")

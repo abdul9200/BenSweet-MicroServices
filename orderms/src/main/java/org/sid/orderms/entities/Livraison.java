@@ -23,6 +23,6 @@ public class Livraison {
 
     private Enum<LivraisonEtat> livraisonEtatEnum;
     @OneToOne(mappedBy = "livraison")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+
     private Order order;
 }

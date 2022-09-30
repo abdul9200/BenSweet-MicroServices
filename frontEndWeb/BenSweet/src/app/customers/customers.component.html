@@ -1,0 +1,279 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <div class="d-flex justify-content-between"> Liste des utilisateurs <button (click)="open(content)" class="btn btn-success">
+        <i class="bi bi-plus-circle"> Ajouter</i>
+      </button></div>
+
+    </div>
+    <div class="card-body">
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th> <th>username</th> <th>email</th> <th>telephone</th> <th> actions</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr *ngFor="let liv of customers ">
+
+            <td>{{liv.id}}</td>
+            <td>{{liv.username}}</td>
+            <td>{{liv.email}}</td>
+            <td>{{liv.telephone}}</td>
+
+            <td class="d-flex justify-content-around">
+              <button  class="btn btn-info"  (click)="openRoles(contentRole,liv)">
+                <i class="bi bi-award"></i>
+              </button>
+              <button (click)="openDelete(contentDelete,liv)" class="btn btn-danger">
+                <i class="bi bi-trash"></i>
+              </button>
+
+            <button (click)="openEdit(contentEdit, liv)" class="btn btn-warning">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button  class="btn btn-info" (click)="openDetails(contentDetails, liv)">
+              <i class="bi bi-search"></i>
+            </button>
+
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">New User</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+      <div class="form-group">
+
+        <label for="username">Username</label>
+        <div class="input-group">
+          <input id="username" name="username" class="form-control" ngModel >
+        </div>
+        <label for="password">Password</label>
+        <div class="input-group">
+          <input id="password" name="password" class="form-control" ngModel>
+        </div>
+        <label for="mail">Mail</label>
+        <div class="input-group">
+          <input id="mail" type="email" name="email" class="form-control" ngModel>
+        </div>
+        <label for="Telephone">Telephone</label>
+        <div class="input-group">
+          <input id="Telephone" type="tel" class="form-control" name="telephone" ngModel>
+        </div>
+
+
+      </div>
+      <div class="border text-center">
+        <button data-dismiss="modal" class="btn btn-info">Submit</button>
+        </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+  </div>
+</ng-template>
+  <ng-template #contentDetails let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">User Info</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  <div class="modal-body">
+    <form >
+      <div class="form-group">
+        <label for="id">id</label>
+        <div class="input-group">
+          <input id="id" name="id" class="form-control"  disabled>
+        </div>
+        <label for="uname">Username</label>
+        <div class="input-group">
+          <input id="uname" name="username" class="form-control" disabled >
+        </div>
+
+        <label for="email">Mail</label>
+        <div class="input-group">
+          <input id="email" type="email" name="email" class="form-control" disabled>
+        </div>
+        <label for="Tel">Telephone</label>
+        <div class="input-group">
+          <input id="Tel" type="tel" class="form-control" name="telephone" disabled>
+        </div>
+
+
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+  </div>
+</ng-template>
+
+
+<ng-template #contentEdit let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Update User</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+<div class="modal-body">
+  <form  [formGroup]=editForm   novalidate>
+    <div class="form-group">
+      <label >id</label>
+      <div class="input-group">
+        <input  formControlName="id" class="form-control" [disabled]="true">
+      </div>
+      <label for="uname1">Username</label>
+      <div class="input-group">
+        <input id="uname1" formControlName="username" class="form-control"  >
+      </div>
+
+      <label for="email1">Mail</label>
+      <div class="input-group">
+        <input id="email1" type="email" formControlName="email" class="form-control" >
+      </div>
+      <label for="Tel1">Telephone</label>
+      <div class="input-group">
+        <input id="Tel1" type="tel" class="form-control" formControlName="telephone" >
+      </div>
+      <div class="border text-center">
+        <button data-dismiss="modal" class="btn btn-info" (click)="onSave()">Update</button>
+        </div>
+
+
+    </div>
+
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+</div>
+</ng-template>
+<ng-template #contentDelete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" >Confirm Delete</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h2>Are you sure you want to delete this record.</h2>
+    <div class="border text-center">
+      <button data-dismiss="modal" class="btn btn-danger" (click)="onDelete()">Yes, Delete!</button>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+  </div>
+</ng-template>
+
+
+
+
+
+
+
+<ng-template #contentRole let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Liste des roles {{username}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        <div class="d-flex justify-content-between">  <button  class="btn btn-success" (click)="openRole(contentAddRole,username.toString())">
+          <i class="bi bi-plus-circle"> Ajouter Role</i>
+        </button></div>
+
+      </div>
+      <div class="card-body">
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Role <th> actions</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let rl of userRoles.appRoles">
+
+              <td>{{rl.roleName}}</td>
+
+
+              <td class="d-flex justify-content-around">
+                <button  class="btn btn-danger" (click)="onDeleteRole(username,rl.roleName)">
+                  <i class="bi bi-trash"></i>
+                </button>
+
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+  </div>
+
+</ng-template>
+
+
+<ng-template #contentAddRole let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">New Role for {{username}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #g="ngForm" (ngSubmit)="onSubmitRole(g)" novalidate>
+      <div class="form-group">
+
+        <label for="username">Username</label>
+        <div class="input-group">
+          <input id="usernameRole" name="username" class="form-control"  ngModel >
+        </div>
+
+        <label for="role">Role</label>
+        <div class="input-group">
+          <select class="form-select" name="rolename" ngModel>
+            <option *ngFor="let rl of roles " value='{{rl.roleName}}'>{{rl.roleName}}</option>
+
+          </select>
+
+        </div>
+
+
+      </div>
+      <div class="border text-center">
+        <button data-dismiss="modal" class="btn btn-info">Submit</button>
+        </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+  </div>
+</ng-template>

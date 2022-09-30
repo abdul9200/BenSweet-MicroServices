@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "*")
 @AllArgsConstructor
 @RestController
 public class OrderRestController {
@@ -28,7 +28,7 @@ public class OrderRestController {
         return orderService.listOrders();
     }
     @PostMapping("/orders")
-    Order addOrder(Order order){
+    Order addOrder(@RequestBody Order order){
         return orderService.addOrder(order);
     }
     @DeleteMapping("/orders/{id}")

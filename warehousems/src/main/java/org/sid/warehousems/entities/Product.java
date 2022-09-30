@@ -1,6 +1,7 @@
 package org.sid.warehousems.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,7 +29,7 @@ public class Product {
     private int quantityStock=1;
 
     private int quantitySold=0;
-    @JsonIgnore
+    @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     private  Category category;
     @JsonIgnore

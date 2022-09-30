@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class LivraisonServiceImp implements LivraisonService{
@@ -16,6 +18,17 @@ public class LivraisonServiceImp implements LivraisonService{
     LivraisonRepository livraisonRepository;
     @Autowired
     OrderRepository orderRepository;
+
+    @Override
+    public Livraison getLivraison(Long idLivraison) {
+        return livraisonRepository.findById(idLivraison).get();
+    }
+
+    @Override
+    public List<Livraison> getLivraisons() {
+        return livraisonRepository.findAll();
+    }
+
     @Override
     public Livraison addLivraison(Livraison livraison, Long idOrder) {
         livraison.setOrder(orderRepository.findById(idOrder).get());

@@ -29,6 +29,14 @@ public class AccountRestController {
     public List<AppUser> appUsers(){
         return accountService.listUsers();
     }
+    @GetMapping(path="/users/{id}")
+    public AppUser getappUser(@PathVariable(name = "id")Long id){
+        return accountService.getUser(id);
+    }
+    @GetMapping(path = "/roles")
+    public List<AppRole> getRoles(){
+        return accountService.getRoles();
+    }
     @PostMapping(path = "/users")
     public AppUser saveUser(@RequestBody AppUser appUser){
         return accountService.addUser(appUser);
@@ -44,11 +52,28 @@ public class AccountRestController {
         accountService.addRoleToUser(roleUserForm.getUsername(),roleUserForm.getRolename());
 
     }
+    @PutMapping(path = "/users/{id}")
+    public  AppUser updateUser(@RequestBody AppUser appUser,@PathVariable(name = "id") Long id){
+        return accountService.updateUser(appUser,id);
+    }
+    @PutMapping(path = "/roles/{id}")
+    public AppRole updateRole(@RequestBody AppRole appRole,@PathVariable(name="id") Long id){
+        return accountService.updateRole(appRole,id);
+    }
+    @DeleteMapping(path = "/roles/{id}")
+    public void deleteRole(@PathVariable(name="id") Long id){
+        accountService.deleteRole(id);
+    }
     @DeleteMapping(path="/deleteRoleToUser")
     public void deleteRoleToUser(@RequestBody RoleUserForm roleUserForm){
         accountService.deleteRoleToUser(roleUserForm.getUsername(),roleUserForm.getRolename());
 
     }
+    @DeleteMapping(path = "/users/{id}")
+    public void deleteUser(@PathVariable(name="id")Long id){
+        accountService.deleteUser(id);
+    }
+
     @DeleteMapping(path="/deleteUser")
     public void removeUser(@RequestBody AppUser appUser){
         accountService.deleteUser(appUser.getUsername());

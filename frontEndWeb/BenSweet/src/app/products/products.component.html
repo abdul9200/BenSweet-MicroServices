@@ -1,0 +1,255 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <div class="d-flex justify-content-between"> Liste des produits <button (click)="open(content)"  class="btn btn-success">
+        <i class="bi bi-plus-circle"> Ajouter</i>
+      </button></div>
+
+    </div>
+    <div class="card-body">
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th> <th>designation</th> <th>description</th> <th>currentPrice</th> <th>promotion</th> <th>selectionné</th> <th>disponible</th> <th>Stock</th> <th>ventes</th> <th> actions</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr *ngFor="let cat of products">
+
+            <td>{{cat.id}}</td>
+            <td>{{cat.designation}}</td>
+            <td>{{cat.description}}</td>
+            <td>{{cat.currentPrice}}</td>
+            <td>{{cat.promotion}}</td>
+            <td>{{cat.selected}}</td>
+            <td>{{cat.available}}</td>
+            <td>{{cat.quantityStock}}</td>
+            <td>{{cat.quantitySold}}</td>
+
+            <td class="d-flex justify-content-around">
+              <button (click)="openDelete(contentDelete,cat)" class="btn btn-danger">
+                <i class="bi bi-trash"></i>
+              </button>
+              <button (click)="openEdit(contentEdit,cat)" class="btn btn-warning">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button  class="btn btn-info" (click)="openDetails(contentDetails,cat)">
+                <i class="bi bi-search"></i>
+              </button>
+            </td>
+
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">New Product</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+      <div class="form-group">
+
+        <label for="designation">Designation</label>
+        <div class="input-group">
+          <input id="designation" name="designation" class="form-control" ngModel >
+        </div>
+        <label for="description">description</label>
+        <div class="input-group">
+          <input id="description" name="description" class="form-control" ngModel >
+        </div>
+        <label for="currentPrice">currentPrice</label>
+        <div class="input-group">
+          <input id="currentPrice" name="currentPrice" class="form-control" ngModel >
+        </div>
+        <label for="promotion">Promotion</label>
+        <div class="input-group">
+          <select class="form-select" name="promotion" ngModel>
+            <option  value='true'>True</option>
+            <option  value='false'>False</option>
+          </select>
+        </div>
+        <label for="quantityStock">Stock</label>
+        <div class="input-group">
+          <input id="quantityStock" name="quantityStock" class="form-control" ngModel >
+        </div>
+
+
+
+        <label for="category">Category</label>
+        <div class="input-group">
+          <select class="form-select" name="category" id="quantityStock" ngModel>
+            <option *ngFor="let cat of cats " value='{{cat.id}}'>{{cat .name}}</option>
+          </select>
+        </div>
+        <label for="patisserie">patisserie</label>
+        <div class="input-group">
+          <select class="form-select" name="patisserie" id="quantityStock" ngModel>
+            <option *ngFor="let pat of patisseries " value='{{pat.id}}'>{{pat .name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="border text-center">
+        <button data-dismiss="modal" class="btn btn-info">Submit</button>
+        </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+  </div>
+</ng-template>
+<ng-template #contentDetails let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Role Info</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+<div class="modal-body">
+  <form >
+    <div class="form-group">
+      <label for="id">id</label>
+      <div class="input-group">
+        <input id="id" name="id" class="form-control"  disabled>
+      </div>
+
+      <label for="cdesignation">Designation</label>
+      <div class="input-group">
+        <input id="cdesignation" name="cdesignation" class="form-control" disabled >
+      </div>
+      <label for="cdescription">description</label>
+      <div class="input-group">
+        <input id="cdescription" name="cdescription" class="form-control" disabled >
+      </div>
+      <label for="ccurrentPrice">currentPrice</label>
+      <div class="input-group">
+        <input id="ccurrentPrice" name="ccurrentPrice" class="form-control" disabled >
+      </div>
+      <label for="cpromotion">Promotion</label>
+      <div class="input-group">
+        <input id="cpromotion" class="form-select" name="cpromotion" disabled>
+
+      </div>
+      <label for="cselected">selected</label>
+      <div class="input-group">
+        <input id="cselected" class="form-select" name="cselected" disabled>
+
+      </div>
+      <label for="cavailable">available</label>
+      <div class="input-group">
+        <input id="cavailable" class="form-select" name="cavailable" disabled>
+
+      </div>
+
+      <label for="cquantityStock">Stock</label>
+      <div class="input-group">
+        <input id="cquantityStock" name="cquantityStock" class="form-control" disabled >
+      </div>
+      <label for="cquantitySold">Sold</label>
+      <div class="input-group">
+        <input id="cquantitySold" name="cquantitySold" class="form-control" disabled >
+      </div>
+      </div>
+
+
+
+
+
+
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+</div>
+</ng-template>
+
+<ng-template #contentEdit let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Update User</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+<div class="modal-body">
+  <form  [formGroup]=editForm   novalidate>
+    <div class="form-group">
+      <label >id</label>
+      <div class="input-group">
+        <input  formControlName="id" class="form-control" [disabled]="true">
+      </div>
+
+      <label for="designation">Designation</label>
+      <div class="input-group">
+        <input id="designation" formControlName="designation" class="form-control" ngModel >
+      </div>
+      <label for="description">description</label>
+      <div class="input-group">
+        <input id="description" formControlName="description" class="form-control" ngModel >
+      </div>
+      <label for="currentPrice">currentPrice</label>
+      <div class="input-group">
+        <input id="currentPrice" formControlName="currentPrice" class="form-control" ngModel >
+      </div>
+      <label for="promotion">Promotion</label>
+      <div class="input-group">
+        <select class="form-select" formControlName="promotion" ngModel>
+          <option  value='true'>True</option>
+          <option  value='false'>False</option>
+        </select>
+      </div>
+      <label for="quantityStock">Stock</label>
+      <div class="input-group">
+        <input id="quantityStock" formControlName="quantityStock" class="form-control" ngModel >
+      </div>
+
+
+
+      <label for="category">Category</label>
+      <div class="input-group">
+        <select class="form-select" formControlName="category" id="quantityStock" ngModel>
+          <option *ngFor="let cat of cats " value='{{cat.id}}'>{{cat .name}}</option>
+        </select>
+      </div>
+      <label for="patisserie">patisserie</label>
+      <div class="input-group">
+        <select class="form-select" formControlName="patisserie" id="quantityStock" ngModel>
+          <option *ngFor="let pat of patisseries " value='{{pat.id}}'>{{pat .name}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="border text-center">
+      <button data-dismiss="modal" class="btn btn-info">Submit</button>
+      </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+</div>
+</ng-template>
+
+<ng-template #contentDelete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" >Confirm Delete</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h2>Are you sure you want to delete this record.</h2>
+    <div class="border text-center">
+      <button data-dismiss="modal" class="btn btn-danger" (click)="onDelete()">Yes, Delete!</button>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+  </div>
+</ng-template>

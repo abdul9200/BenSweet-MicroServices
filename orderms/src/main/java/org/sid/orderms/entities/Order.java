@@ -1,5 +1,6 @@
 package org.sid.orderms.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,8 +25,10 @@ public class Order {
     private Collection<OrderItem> orderItems;
     @Transient
     private AppUser client;
-    private long clientID;
-    private double totalAmount=0;
+    private double clientID;
+
     @OneToOne
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Livraison livraison;
+    private double totalAmount=0;
 }

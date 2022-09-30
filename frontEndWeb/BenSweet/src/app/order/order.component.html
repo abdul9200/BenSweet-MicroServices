@@ -1,0 +1,139 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <div class="d-flex justify-content-between"> Liste des demandes<button (click)="open(content)" class="btn btn-success">
+        <i class="bi bi-plus-circle"> Ajouter</i>
+      </button></div>
+
+    </div>
+    <div class="card-body">
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th> <th>date de demande</th> <th>client</th> <th> prix total</th> <th>actions</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr *ngFor="let pat of orders">
+
+            <td>{{pat.id}}</td>
+            <td>{{pat.date}}</td>
+            <td>{{pat.client.username}}</td>
+            <td>{{pat.totalAmount}}</td>
+
+            <td class="d-flex justify-content-around">
+              <button (click)="openDelete(contentDelete,pat)" class="btn btn-danger">
+                <i class="bi bi-trash"></i>
+              </button>
+
+              <button  class="btn btn-info" (click)="openDetails(contentDetails,pat)">
+                <i class="bi bi-search"></i>
+              </button>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">New Category</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+      <label for="client">client</label>
+        <div class="input-group">
+          <select class="form-select" name="clientID" id="client" ngModel>
+            <option *ngFor="let user of users " value='{{user.id}}'>{{user.username}}</option>
+
+          </select>
+
+        </div>
+
+      <div class="border text-center">
+        <button data-dismiss="modal" class="btn btn-info">Submit</button>
+        </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+  </div>
+</ng-template>
+
+<ng-template #contentDetails let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Role Info</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+<div class="modal-body">
+  <form >
+    <div class="form-group">
+      <label for="id">id</label>
+      <div class="input-group">
+        <input id="id" name="id" class="form-control"  disabled>
+      </div>
+      <label for="cdate">date</label>
+      <div class="input-group">
+        <input id="cdate" name="cdate" class="form-control" disabled >
+      </div>
+      <label for="cclient">client</label>
+      <div class="input-group">
+        <input id="cclient" name="cclient" class="form-control" disabled >
+      </div>
+      <label for="ctoltalAmount">toltalAmount</label>
+      <div class="input-group">
+        <input id="ctoltalAmount" name="ctoltalAmount" class="form-control" disabled >
+      </div>
+  </div>
+
+  </form>
+  <table *ngIf="ord.totalAmount>0" class="table">
+    <thead>
+      <tr>
+        <th>ID</th> <th>product</th> <th>quantity</th> <th> price</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr *ngFor="let pat of ord.orderItems">
+        <td>{{pat.id}}</td>
+            <td>{{pat.product.designation}}</td>
+            <td>{{pat.quantity}}</td>
+            <td>{{pat.price}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+</div>
+</ng-template>
+
+<ng-template #contentDelete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" >Confirm Delete</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h2>Are you sure you want to delete this record.</h2>
+    <div class="border text-center">
+      <button data-dismiss="modal" class="btn btn-danger" (click)="onDelete()">Yes, Delete!</button>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+  </div>
+</ng-template>

@@ -1,11 +1,13 @@
 package org.sid.orderms.repositories;
 
+import org.sid.orderms.entities.Patisserie;
 import org.sid.orderms.entities.Product;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
-
+@CrossOrigin(origins = "*")
 @FeignClient(name="warehouse-service")
 public interface ProductServiceClient {
     @GetMapping("/products/{id}")
@@ -19,4 +21,6 @@ public interface ProductServiceClient {
 
     @PutMapping(path = "/products/{idProd}/annulerdemanded/{idDemand}")
     Product annulerDemandeProduct(@PathVariable(name = "idProd") Long idproduct, @PathVariable(name = "idDemand") int quantitydemanded);
+    @GetMapping(path="/products/{id}/patisserie")
+    Patisserie getPatisserie(@PathVariable("id")Long id);
 }

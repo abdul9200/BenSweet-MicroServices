@@ -30,7 +30,7 @@ public class OrderServiceImp implements OrderService{
     @Override
     public Order getOrder(Long id) {
         Order order=orderRepository.findById(id).get();
-        order.setClient(appUserServiceClient.findAppUserById(order.getClientID()));
+        order.setClient(appUserServiceClient.findAppUserById((long) order.getClientID()));
         order.setOrderItems(orderItemRepository.findByOrderId(id));
         order.getOrderItems().forEach(pi->{
             pi.setProduct(productServiceClient.findProductById(pi.getProductID()));
@@ -42,7 +42,7 @@ public class OrderServiceImp implements OrderService{
     public List<Order> listOrders() {
         List<Order> orders=orderRepository.findAll();
         orders.forEach(order -> {
-        order.setClient(appUserServiceClient.findAppUserById(order.getClientID()));
+        order.setClient(appUserServiceClient.findAppUserById((long) order.getClientID()));
         order.setOrderItems(orderItemRepository.findByOrderId(order.getId()));
         order.getOrderItems().forEach(pi->{
             pi.setProduct(productServiceClient.findProductById(pi.getProductID()));

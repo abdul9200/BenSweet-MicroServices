@@ -1,5 +1,6 @@
 package org.sid.warehousems.service;
 
+import org.sid.warehousems.entities.Patisserie;
 import org.sid.warehousems.entities.Product;
 import org.sid.warehousems.repositories.CategoryRepository;
 import org.sid.warehousems.repositories.PatisserieRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Transient;
+import java.util.List;
 
 @Service
 @Transactional
@@ -66,6 +68,38 @@ public class ProductServiceImp implements ProductService{
         }
         else
             return null;
+    }
+
+    @Override
+    public Product getProduct(Long idProduct) {
+
+
+        return productRepository.findById(idProduct).get();
+    }
+
+    @Override
+    public List<Product> getProducts() {
+        return productRepository.findAll();
+    }
+
+    @Override
+    public List<Product> getProductsByPatisserie(Long id) {
+        return productRepository.findByPatisserieId(id).stream().toList();
+    }
+
+    @Override
+    public List<Product> getProductsByCategory(Long id) {
+        return productRepository.findByCategoryId(id);
+    }
+
+    @Override
+    public void deleteProduct(Long id) {
+        productRepository.deleteById(id);
+    }
+
+    @Override
+    public Patisserie getPatisserie(Long idProduct) {
+        return productRepository.findById(idProduct).get().getPatisserie();
     }
 
 }

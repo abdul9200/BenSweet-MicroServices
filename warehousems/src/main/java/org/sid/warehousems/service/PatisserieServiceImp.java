@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class PatisserieServiceImp implements PatisserieService {
@@ -58,5 +60,35 @@ public class PatisserieServiceImp implements PatisserieService {
         patisserie.setModerateur(appUserServiceClient.findAppUserById((long) patisserie.getModerateurID()));
         patisserie.setProducts(productRepository.findByPatisserieId(id));
         return patisserie;
+    }
+
+    @Override
+    public List<Patisserie> getPatisseries() {
+        List<Patisserie> patisseries=patisserieRepository.findAll().stream().toList();
+        patisseries.forEach(patisserie -> {
+            patisserie.setModerateur(appUserServiceClient.findAppUserById((long) patisserie.getModerateurID()));
+            patisserie.setProducts(productRepository.findByPatisserieId(patisserie.getId()));
+
+        });
+        return patisseries;
+    }
+
+    @Override
+    public void deletePatisserie(Long id) {
+        patisserieRepository.deleteById(id);
+    }
+
+    @Override
+    public Patisserie addSold(Long idPatisserie, double solde) {
+        Patisserie patisserie=patisserieRepository.findById(idPatisserie).get();
+        patisserie.setSolde(patisserie.getSolde()+solde);
+        return patisserieRepository.save((patisserie));
+    }
+
+    @Override
+    public Patisserie removeSold(Long idPatisserie, double solde) {
+        Patisserie patisserie=patisserieRepository.findById(idPatisserie).get();
+        patisserie.setSolde(patisserie.getSolde()+solde);
+        return patisserieRepository.save((patisserie));
     }
 }

@@ -10,7 +10,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -29,7 +32,9 @@ public class AccountServiceImpl implements AccountService {
         String p = appUser.getPassword();
         appUser.setPassword(passwordEncoder.encode(p));
         AppRole appRole =appRoleRepository.findByRoleName("USER");
-        appUser.getAppRoles().add(appRole);
+        Set<AppRole> appRoles1=new HashSet<>();
+        appRoles1.add(appRole);
+        appUser.setAppRoles(appRoles1);
         return appUserRepository.save(appUser);
 
     }
@@ -37,6 +42,13 @@ public class AccountServiceImpl implements AccountService {
 
     public AppRole addRole(AppRole appRole) {
         return appRoleRepository.save(appRole);
+    }
+
+    @Override
+    public AppUser updateUser(AppUser appUser, Long id) {
+        appUser.setAppRoles(appUserRepository.findById(id).get().getAppRoles());
+        appUser.setId(id);
+        return appUserRepository.save(appUser);
     }
 
 
@@ -66,6 +78,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public void deleteUser(Long id) {
+        appUserRepository.deleteById(id);
+    }
+
+
+    @Override
     public void deleteRoleToUser(String userName, String roleName) {
         AppUser appUser=appUserRepository.findByUsername(userName);
         AppRole appRole=appRoleRepository.findByRoleName(roleName);
@@ -73,4 +91,29 @@ public class AccountServiceImpl implements AccountService {
         appUserRepository.save(appUser);
 
     }
+
+    @Override
+    public AppUser getUser(Long id) {
+        return appUserRepository.findById(id).get();
+    }
+
+    @Override
+    public List<AppRole> getRoles() {
+        return appRoleRepository.findAll();
+    }
+
+    @Override
+    public AppRole updateRole(AppRole appRole, Long id) {
+        appRole.setId(id);
+        return appRoleRepository.save(appRole);
+    }
+
+
+    @Override
+    public void deleteRole(Long id) {
+        appRoleRepository.deleteById(id);
+
+    }
+
+
 }

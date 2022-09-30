@@ -5,10 +5,21 @@ import org.sid.orderms.services.LivraisonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@CrossOrigin(origins = "*")
 @RestController
 public class LivraisonRestController {
     @Autowired
     private LivraisonService livraisonService;
+    @GetMapping("/livraisons/{id}")
+    public Livraison getLivraison(@PathVariable("id")Long id){
+        return livraisonService.getLivraison(id);
+    }
+    @GetMapping("/livraisons")
+    public List<Livraison> getLivraisons(){
+        return livraisonService.getLivraisons();
+    }
     @PostMapping("/livraisons/{idOrder}")
     public Livraison addLivraison(@RequestBody Livraison livraison, @PathVariable("idOrder")Long idOrder){
         return livraisonService.addLivraison(livraison,idOrder);
